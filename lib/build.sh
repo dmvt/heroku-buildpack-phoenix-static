@@ -79,16 +79,16 @@ install_npm() {
 install_and_cache_npm_deps() {
   info "Installing and caching node modules"
   cd $phoenix_dir
-  if [ -d $cache_dir/node_modules ]; then
-    mkdir -p node_modules
-    cp -r $cache_dir/node_modules/* node_modules/
-  fi
+#   if [ -d $cache_dir/node_modules ]; then
+#     mkdir -p node_modules
+#     cp -r $cache_dir/node_modules/* node_modules/
+#   fi
 
   npm prune | indent
   npm install --quiet --unsafe-perm --userconfig $build_dir/npmrc 2>&1 | indent
   npm rebuild 2>&1 | indent
   npm --unsafe-perm prune 2>&1 | indent
-  cp -r node_modules $cache_dir
+  cp -rfv node_modules $cache_dir
   PATH=$phoenix_dir/node_modules/.bin:$PATH
   install_bower_deps
 }
